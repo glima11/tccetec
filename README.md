@@ -8,8 +8,11 @@ Projeto de Reconhecimento Facial e Integração
 ## Danilo
 
 # TODO
-## Reconhecimento Facial - PEndente
+## Reconhecimento Facial - Pendnete
 ##
 
 # Para instalar bibliotecas
-Executar o comando pip intall -r .\requeriments.txt 
+Executar o comando pip install -r .\requeriments.txt 
+
+# Para criar ambiente ambiente
+python -m venv .venv
