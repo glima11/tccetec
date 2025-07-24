@@ -1,7 +1,8 @@
 ## TCC Etec 2025 - Reconhecimento Facial
 Projeto de Reconhecimento Facial e Integração
 
-## Giovanni
+## Grupo
+- Giovanni
 - Gustavo
 - João
 - Guilherme
@@ -21,8 +22,11 @@ Projeto de Reconhecimento Facial e Integração
 - Entender o que faz a face_recognaztion e falar sobre as técnicas que ela utiliza internamente
 - Por exemplo vi que na instalação usa pyTorch, acredito que ela usa rede neural, por exemplo
 
-## Para criar ambiente ambiente
-python -m venv .venv
+## Criar ambiente Virtual
+Recomenda-se criar ambiente virutal em quanto estiver desenvolvendo e, daí, a pasta .venv pode ser excluída
+python -m venv .venv, para criar
+`
+E, para ativar, antes de desenvolver, usar o .venv\Scripts\activate.bat
 
 ## Instalar o CMake
 Instalar o https://cmake.org/download/
