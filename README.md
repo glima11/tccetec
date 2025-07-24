@@ -28,9 +28,9 @@ Recomenda-se criar ambiente virutal em quanto estiver desenvolvendo e, daí, a p
 - E, para ativar, antes de desenvolver, usar o .venv\Scripts\activate.bat
 
 ## Instalar o CMake
-Instalar o Visual Studio for C++
-Instalar o https://cmake.org/download/
-Selecionar Windows x64 Installer:
+- Instalar o Visual Studio for C++
+- Instalar o https://cmake.org/download/
+-- Selecionar Windows x64 Installer:
 
 ## Para instalar bibliotecas
 Executar o comando pip install -r .\requeriments.txt 
