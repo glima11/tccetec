@@ -3,6 +3,7 @@ import cvzone
 from ultralytics import YOLO
 import cv2
 import os
+import face_recognition
 
 configs = Properties()
 
