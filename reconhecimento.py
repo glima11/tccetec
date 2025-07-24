@@ -11,8 +11,9 @@ with open("app-config.properties", "rb") as config_file:
     configs.load(config_file)
 
 arquivo_modelo = str(configs.get("arquivo_modelo").data)
-diretorio_origem = str(configs.get("diretorio_origem").data)
-arquivo_modelo_full = os.path.join(diretorio_origem, arquivo_modelo)
+diretorio_foto_pessoas = str(configs.get("diretorio_foto_pessoas").data)
+diretorio_modelo = str(configs.get("diretorio_modelo").data)
+arquivo_modelo_full = os.path.join(diretorio_modelo, arquivo_modelo)
 indice_camera = int(configs.get("indice_camera").data)
 
 cap = cv2.VideoCapture(indice_camera, cv2.CAP_DSHOW)
