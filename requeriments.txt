@@ -5,3 +5,5 @@ ultralytics
 cvzone
 opencv-python 
 jproperties
+twilio
+pandas

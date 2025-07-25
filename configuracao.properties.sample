@@ -1,0 +1,11 @@
+diretorio_modelo=C:/diraplicacao/modelo>
+diretorio_foto_pessoas=C:/diraplicacao/fotopessoas
+diretorio_destino=C:/diraplicacao/output
+arquivo_modelo=yolov8n.pt 
+indice_camera=0
+confianca=0.7
+twilio_sid=
+twilio_token=
+twilio_celular=+5511123456
+telefone_padrao=5511123456
+tempo_entre_envios_segundos=120

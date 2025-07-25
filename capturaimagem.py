@@ -9,7 +9,7 @@ from tkinter import messagebox
 
 configs = Properties()
 
-with open("app-config.properties", "rb") as config_file:
+with open("configuracao.properties", "rb") as config_file:
     configs.load(config_file)
 
 arquivo_modelo = str(configs.get("arquivo_modelo").data)
@@ -25,7 +25,7 @@ def capturar_nome():
     root.withdraw()  # Esconde a janela principal
 
     # Abre uma caixa de diálogo solicitando o nome
-    nome = simpledialog.askstring(title="Entrada de Nome", prompt="Por favor, digite seu nome:")
+    nome = simpledialog.askstring(title="Entrada de Nome", prompt="Digite seu nome:")
 
     if nome is not None:
         return nome

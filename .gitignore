@@ -1,2 +1,5 @@
 .venv
 output
+input/pessoas.csv
+input/*.jpg
+configuracao.properties
