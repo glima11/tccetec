@@ -1,5 +1,4 @@
 .venv
+foto_pessoas/
 output
-input/pessoas.csv
-input/*.jpg
 configuracao.properties
