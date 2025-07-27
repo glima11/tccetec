@@ -1,0 +1,1 @@
+python.exe reconhecimento.py

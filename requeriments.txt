@@ -1,9 +1,9 @@
+jproperties
 cmake
 dlib
 face_recognition
 ultralytics
 cvzone
 opencv-python 
-jproperties
 twilio
 pandas

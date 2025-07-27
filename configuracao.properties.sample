@@ -1,6 +1,6 @@
 diretorio_modelo=C:/diraplicacao/modelo>
 diretorio_foto_pessoas=C:/diraplicacao/fotopessoas
-diretorio_destino=C:/diraplicacao/output
+diretorio_log_acesso=C:/diraplicacao/diretorio_log_acesso
 arquivo_modelo=yolov8n.pt 
 indice_camera=0
 confianca=0.7

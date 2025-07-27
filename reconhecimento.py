@@ -16,7 +16,10 @@ with open("configuracao.properties", "rb") as config_file:
 
 arquivo_modelo = str(configs.get("arquivo_modelo").data)
 know_faces_dir = str(configs.get("diretorio_foto_pessoas").data)
+
 diretorio_modelo = str(configs.get("diretorio_modelo").data)
+diretorio_log_acesso = str(configs.get("diretorio_log_acesso").data)
+
 arquivo_modelo_full = os.path.join(diretorio_modelo, arquivo_modelo)
 indice_camera = int(configs.get("indice_camera").data)
 confianca = float(configs.get("confianca").data)
@@ -41,6 +44,28 @@ know_face_names = []
 nome_janela = "TCC 2025 - Reconhecimento Facial" 
 
 client = Client(twilio_sid, twilio_token)
+
+def registrar_acesso(nome, telefone):
+    global diretorio_log_acesso
+
+    arquivo_log = os.path.join(diretorio_log_acesso, f"log_acesso_{datetime.now().strftime('%Y-%m-%d')}.csv")
+
+    dicionario = {
+        "data_hora": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        "nome": nome,
+        "telefone": telefone
+    }
+
+    df_log = pd.DataFrame([dicionario])
+
+    if os.path.exists(arquivo_log):
+        df_log_existente = pd.read_csv(arquivo_log, sep=';')
+        df_log = pd.concat([df_log_existente, df_log], ignore_index=True)
+    else:
+        df_log = pd.DataFrame([dicionario])
+    
+    df_log.to_csv(arquivo_log, sep=';', index=False)    
+
 
 #envio SMS
 def enviar_sms(telefone_destino, mensagem):
@@ -241,6 +266,7 @@ def main():
                                 if data_ultimo_envio_sms is None or (datetime.now() - pd.to_datetime(data_ultimo_envio_sms)).total_seconds() > tempo_entre_envios_segundos:
                                     try:
                                         enviar_sms(telefone_destino, f"Acesso de {nome_pessoa}, identificado nas dependências do ETEC Jaragua em {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}.")
+                                        registrar_acesso(nome_pessoa, telefone_destino)
                                         set_ultimo_envio_sms(arquivo, datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
                                     except Exception as e:
                                         print(f"Erro ao enviar SMS: {e}")

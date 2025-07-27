@@ -1,0 +1,1 @@
+python.exe capturaimagem.py
