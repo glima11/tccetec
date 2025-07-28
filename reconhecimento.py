@@ -8,6 +8,7 @@ import face_recognition
 import numpy as np
 from twilio.rest import Client
 from datetime import datetime
+import threading
 
 configs = Properties()
 
@@ -265,6 +266,7 @@ def main():
                                 
                                 if data_ultimo_envio_sms is None or (datetime.now() - pd.to_datetime(data_ultimo_envio_sms)).total_seconds() > tempo_entre_envios_segundos:
                                     try:
+                                        threading.Thread(target=enviar_sms, args=(telefone_destino, f"Acesso de {nome_pessoa}, identificado nas dependências do ETEC Jaragua em {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}.")).start()
                                         enviar_sms(telefone_destino, f"Acesso de {nome_pessoa}, identificado nas dependências do ETEC Jaragua em {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}.")
                                         set_ultimo_envio_sms(arquivo, datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
                                     except Exception as e:
