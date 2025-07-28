@@ -266,10 +266,15 @@ def main():
                                 if data_ultimo_envio_sms is None or (datetime.now() - pd.to_datetime(data_ultimo_envio_sms)).total_seconds() > tempo_entre_envios_segundos:
                                     try:
                                         enviar_sms(telefone_destino, f"Acesso de {nome_pessoa}, identificado nas dependências do ETEC Jaragua em {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}.")
-                                        registrar_acesso(nome_pessoa, telefone_destino)
                                         set_ultimo_envio_sms(arquivo, datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
                                     except Exception as e:
                                         print(f"Erro ao enviar SMS: {e}")
+                                        
+                                    try:
+                                        registrar_acesso(nome_pessoa, telefone_destino)
+                                    except Exception as e:
+                                        print(f"Erro ao enviar Registrar Acesso: {e}")
+
 
     cap.release()
     cv2.destroyAllWindows()

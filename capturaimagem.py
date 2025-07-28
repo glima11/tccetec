@@ -6,6 +6,8 @@ import os
 import tkinter as tk
 from tkinter import simpledialog
 from tkinter import messagebox
+import pandas as pd
+from datetime import datetime
 
 configs = Properties()
 
@@ -17,8 +19,31 @@ diretorio_foto_pessoas = str(configs.get("diretorio_foto_pessoas").data)
 diretorio_modelo = str(configs.get("diretorio_modelo").data)
 arquivo_modelo_full = os.path.join(diretorio_modelo, arquivo_modelo)
 indice_camera = int(configs.get("indice_camera").data)
+telefone_padrao = str(configs.get("telefone_padrao").data)
+
+arquivo_base_pessoas = os.path.join(diretorio_foto_pessoas, "pessoas.csv")
 
 facemodel = YOLO(arquivo_modelo_full)
+
+def gerar_csv():
+    if os.path.exists(arquivo_base_pessoas):
+        df_pessoas = pd.read_csv(arquivo_base_pessoas, sep=';')
+    else:
+        df_pessoas = pd.DataFrame(columns=["arquivo", "nome", "telefone", "ultimo_envio_sms"])
+        
+    data_hora_inicio_2024 = datetime(2024, 1, 1, 10, 15, 16)
+        
+    for arquivo in os.listdir(diretorio_foto_pessoas):
+        if arquivo.endswith(".jpg") or arquivo.endswith(".png"):
+            image_path = os.path.join(diretorio_foto_pessoas, arquivo)
+            
+            if df_pessoas[df_pessoas['arquivo'] == arquivo].empty:
+                df_pessoas = pd.concat([df_pessoas, pd.DataFrame([{"arquivo": arquivo, 
+                                                                    "nome": os.path.splitext(arquivo)[0], 
+                                                                    "telefone": telefone_padrao, 
+                                                                    "ultimo_envio_sms": data_hora_inicio_2024}])], ignore_index=True)
+    
+    df_pessoas.to_csv(arquivo_base_pessoas, sep=';', index=False)                 
 
 def capturar_nome():
     root = tk.Tk()
@@ -57,6 +82,7 @@ def main():
         key = cv2.waitKey(10)
 
         if key & 0xFF == 27:  # Tecla "Esc" para sair
+            gerar_csv()
             break
         elif key & 0xFF == 13:  # Gravar
             novo_frame = frame_original.copy()
@@ -70,7 +96,6 @@ def main():
                 cvzone.putTextRect(novo_frame, 'Não detectado nenhuma face', (50, y_offset + i * 60), scale=2, thickness=3, offset=10)
                 cv2.imshow("TCC 2025", novo_frame)
                 cv2.namedWindow("TCC 2025", cv2.WINDOW_NORMAL)
-                cv2.moveWindow("TCC 2025", 0, 0)
                 cv2.waitKey(1500)
             else:
                 gravar_frame(novo_frame)
@@ -84,7 +109,7 @@ def main():
                 cvzone.putTextRect(novo_frame, line, (50, y_offset + i * 60), scale=2, thickness=3, offset=10)
             cv2.imshow("TCC 2025", novo_frame)
             cv2.namedWindow("TCC 2025", cv2.WINDOW_NORMAL)
-            cv2.moveWindow("TCC 2025", 0, 0)
+            #cv2.moveWindow("TCC 2025", 0, 0)
 
 if __name__ == "__main__":
     main()
