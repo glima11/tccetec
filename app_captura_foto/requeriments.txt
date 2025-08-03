@@ -1,0 +1,6 @@
+jproperties
+cmake
+cvzone
+opencv-python 
+flask
+pandas
