@@ -1,1 +1,1 @@
-python.exe reconhecimento.py
+python.exe app_principal.py
