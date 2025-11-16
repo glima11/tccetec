@@ -9,6 +9,7 @@ import numpy as np
 from twilio.rest import Client
 from datetime import datetime
 import threading
+import time
 
 configs = Properties()
 
@@ -45,6 +46,30 @@ know_face_names = []
 nome_janela = "TCC 2025 - Reconhecimento Facial" 
 
 client = Client(twilio_sid, twilio_token)
+
+catraca_thread = None
+
+def acionar_catraca():
+    global catraca_thread
+    
+    # Se já existe thread em execução, não cria outra
+    if catraca_thread is not None and catraca_thread.is_alive():
+        print("Catraca já está acionada")
+        return
+    
+    def tarefa():
+        try:
+            print("Catraca acionada...")
+            
+            for cont in range(600):
+                print(cont)
+                time.sleep(10)
+        finally:
+            global catraca_thread
+            catraca_thread = None
+    
+    catraca_thread = threading.Thread(target=tarefa, daemon=True)
+    catraca_thread.start()
 
 def registrar_acesso(nome, telefone):
     global diretorio_log_acesso
@@ -266,16 +291,23 @@ def main():
                                 
                                 if data_ultimo_envio_sms is None or (datetime.now() - pd.to_datetime(data_ultimo_envio_sms)).total_seconds() > tempo_entre_envios_segundos:
                                     try:
-                                        threading.Thread(target=enviar_sms, args=(telefone_destino, f"Acesso de {nome_pessoa}, identificado nas dependências do ETEC Jaragua em {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}.")).start()
-                                        enviar_sms(telefone_destino, f"Acesso de {nome_pessoa}, identificado nas dependências do ETEC Jaragua em {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}.")
+                                        print('Pedindo para acionar a catraca...')
+                                        acionar_catraca()
+                                        time.sleep(10)
+                                        print('fim do sleep...')
+
                                         set_ultimo_envio_sms(arquivo, datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+                                        enviar_sms(telefone_destino, f"Acesso de {nome_pessoa}, identificado nas dependências do ETEC Jaragua em {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}.")
+                                        print('solicitando o evento de acionar catraca...')
                                     except Exception as e:
-                                        print(f"Erro ao enviar SMS: {e}")
+                                        print(f"Erro:{e}")
                                         
                                     try:
                                         registrar_acesso(nome_pessoa, telefone_destino)
                                     except Exception as e:
                                         print(f"Erro ao enviar Registrar Acesso: {e}")
+                                        
+                                break  # Processa apenas o primeiro rosto reconhecido
 
 
     cap.release()
